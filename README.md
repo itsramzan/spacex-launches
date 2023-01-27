@@ -1,46 +1,102 @@
-# Getting Started with Create React App and Redux
+# SpaceX Launches
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This project utilizes the [SpaceX API](https://api.spacexdata.com/v3/) to display information about past and upcoming launches by SpaceX. It is build with React, Redux Toolkit Query and Tailwind CSS.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+1. Clone the repository to your local machine
 
-### `npm start`
+```bash
+git clone https://github.com/itsramzan/spacex-launches.git
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. Install the dependencies
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+npm install
+```
 
-### `npm test`
+3. Start the development server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm start
+```
 
-### `npm run build`
+The project will now be running on
+http://localhost:3000
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Live Link
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Site hosted on netlify -
+[SpaceX Launches](https://spacex-launch-bd.netlify.app/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+1. Display a list of past and upcoming launches
+2. View detailed information about individual launches
+3. Search functionality for launches
+4. Filter by launches status, upcoming status & date range
+5. Responsive design for different screen sizes
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Technologies Used
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. React
+2. React Router DOM
+3. Redux Toolkit Query
+4. Tailwind CSS
+5. [SpaceX API](https://api.spacexdata.com/v3/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Folder Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+.
+├── app
+│   └── store.js
+├── App.jsx
+├── assets
+│   └── images
+│       └── noImage.jpg
+├── components
+│   ├── Launch
+│   │   ├── DetailsItem.jsx
+│   │   └── LaunchDetails.jsx
+│   ├── Launches
+│   │   ├── Filter.jsx
+│   │   ├── LaunchesGridItem.jsx
+│   │   ├── LaunchesGrid.jsx
+│   │   └── Search.jsx
+│   ├── Layout.jsx
+│   ├── Shared
+│   │   ├── Footer.jsx
+│   │   └── Navbar.jsx
+│   └── UI
+│       ├── Error.jsx
+│       ├── Heading.jsx
+│       ├── Loading.jsx
+│       └── ScrollTop.jsx
+├── features
+│   ├── api
+│   │   └── apiSlice.js
+│   ├── filter
+│   │   └── filterSlice.js
+│   ├── launch
+│   │   └── launchApi.js
+│   └── search
+│       └── searchSlice.js
+├── index.css
+├── index.js
+├── pages
+│   ├── Home.jsx
+│   ├── Launches.jsx
+│   ├── Launch.jsx
+│   └── NotFound.jsx
+└── utils
+    ├── debounce.js
+    └── scrollTop.js
+```
 
-## Learn More
+## Contributing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please make sure to update tests as appropriate.
