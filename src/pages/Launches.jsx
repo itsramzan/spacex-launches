@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useGetLaunchesQuery } from "features/launch/launchApi";
 import { useSelector } from "react-redux";
 import Loading from "components/UI/Loading";
 import Error from "components/UI/Error";
 import Heading from "components/UI/Heading";
 import Search from "components/Launches/Search";
+import Filter from "components/Launches/Filter";
 import LaunchesGrid from "components/Launches/LaunchesGrid";
 
 const Launches = () => {
@@ -17,6 +18,7 @@ const Launches = () => {
   } = useGetLaunchesQuery();
 
   const { searchText } = useSelector((state) => state.search);
+  const { status, upcoming } = useSelector((state) => state.filter);
 
   // Decide what to render
   let content = null;
@@ -29,27 +31,53 @@ const Launches = () => {
 
   if (isSuccess && launches.length > 0) {
     // Search from launches
-    const searched = !searchText
+    const searchedData = !searchText
       ? launches
       : launches.filter((launch) =>
           launch.rocket.rocket_name.toLowerCase().includes(searchText)
         );
 
+    // Filter launch status from searchedData
+    const statusFilteredData = !status
+      ? searchedData
+      : searchedData.filter((launch) => {
+          if (status === "true") return launch.launch_success === true;
+          if (status === "false") return launch.launch_success === false;
+          return true;
+        });
+
+    // Filter launch upcoming from statusFilteredData
+    const upcomingFilteredData = !upcoming
+      ? statusFilteredData
+      : statusFilteredData.filter((launch) => {
+          if (upcoming === "true") return launch.upcoming === true;
+          if (upcoming === "false") return launch.upcoming === false;
+          return true;
+        });
+
     content = (
       <div className="space-y-4">
         {/* Heading */}
-        <Heading text={`All Launches (${searched.length})`} />
+        <Heading text={`All Launches (${upcomingFilteredData.length})`} />
 
         {/* Search and filtering section */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between pb-2">
           <Search />
+          <Filter />
         </div>
 
         {/* Search and filtering info text */}
-        <p>{searchText && `Search by ${searchText}`}</p>
+        <p className="text-xs font-semibold">
+          {searchText && `Search by rocket name ${searchText} `}
+          {status &&
+            `Filter by launch status ${
+              status === "true" ? "success" : "failed"
+            }`}
+          {upcoming && ` Filter by upcoming status ${upcoming}`}
+        </p>
 
         {/* Launch items grid */}
-        <LaunchesGrid {...{ launches: searched }} />
+        <LaunchesGrid {...{ launches: upcomingFilteredData }} />
       </div>
     );
   }
