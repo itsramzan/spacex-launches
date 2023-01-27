@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap");
+  * {
+    font-family: "Quicksand", "Hind Siliguri";
+    @apply m-0 p-0 box-border list-none outline-none select-none;
+  }
+  html,
+  body {
+    @apply scroll-smooth;
+  }
+  img {
+    @apply h-auto w-full object-cover;
+  }
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-md;
+  }
+}
