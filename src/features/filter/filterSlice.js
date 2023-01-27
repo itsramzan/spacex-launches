@@ -3,6 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   status: "",
   upcoming: "",
+  dateRange: {
+    startDate: new Date("03-25-2006"),
+    endDate: new Date(),
+    key: "selection",
+  },
 };
 
 const filterSlice = createSlice({
@@ -15,8 +20,12 @@ const filterSlice = createSlice({
     upcomingFiltered: (state, action) => {
       state.upcoming = action.payload;
     },
+    dateRangeFiltered: (state, action) => {
+      state.dateRange = action.payload;
+    },
   },
 });
 
 export default filterSlice.reducer;
-export const { statusFiltered, upcomingFiltered } = filterSlice.actions;
+export const { statusFiltered, upcomingFiltered, dateRangeFiltered } =
+  filterSlice.actions;

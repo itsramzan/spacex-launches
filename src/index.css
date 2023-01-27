@@ -22,3 +22,35 @@
     @apply bg-primary rounded-md;
   }
 }
+
+@layer components {
+  .rdrDateRangePickerWrapper {
+    @apply border-2 border-primary rounded-md overflow-hidden;
+  }
+
+  .rdrDefinedRangesWrapper {
+    @apply bg-base-300;
+  }
+  .rdrDateRangeWrapper {
+    @apply bg-base-300;
+  }
+  .rdrDateDisplayWrapper {
+    @apply bg-base-300;
+  }
+  .rdrStaticRange {
+    @apply border-primary;
+  }
+  .rdrDateDisplayItem {
+    @apply bg-primary;
+  }
+  .rdrInputRangeInput {
+    @apply bg-primary text-black font-semibold;
+  }
+}
+
+.rdrDateInput.rdrDateDisplayItem input {
+  color: black;
+}
+.rdrDayNumber span {
+  color: #fff;
+}

@@ -7,6 +7,7 @@ import Heading from "components/UI/Heading";
 import Search from "components/Launches/Search";
 import Filter from "components/Launches/Filter";
 import LaunchesGrid from "components/Launches/LaunchesGrid";
+import moment from "moment";
 
 const Launches = () => {
   const {
@@ -18,7 +19,7 @@ const Launches = () => {
   } = useGetLaunchesQuery();
 
   const { searchText } = useSelector((state) => state.search);
-  const { status, upcoming } = useSelector((state) => state.filter);
+  const { status, upcoming, dateRange } = useSelector((state) => state.filter);
 
   // Decide what to render
   let content = null;
@@ -29,6 +30,7 @@ const Launches = () => {
   if (isSuccess && launches.length === 0)
     content = <Error message="No content found" />;
 
+  // This block run if everythin is ok
   if (isSuccess && launches.length > 0) {
     // Search from launches
     const searchedData = !searchText
@@ -37,7 +39,7 @@ const Launches = () => {
           launch.rocket.rocket_name.toLowerCase().includes(searchText)
         );
 
-    // Filter launch status from searchedData
+    // Filter data by launch status from searchedData
     const statusFilteredData = !status
       ? searchedData
       : searchedData.filter((launch) => {
@@ -46,7 +48,7 @@ const Launches = () => {
           return true;
         });
 
-    // Filter launch upcoming from statusFilteredData
+    // Filter data by launch upcoming from statusFilteredData
     const upcomingFilteredData = !upcoming
       ? statusFilteredData
       : statusFilteredData.filter((launch) => {
@@ -55,10 +57,21 @@ const Launches = () => {
           return true;
         });
 
+    // Filter data by date from upcomingFilteredData
+    const dateFilteredData = upcomingFilteredData.filter((launch) => {
+      const launchDate = moment(launch.launch_date_local);
+      const startDate = dateRange.startDate;
+      const endDate = dateRange.endDate;
+      return (
+        launchDate.isSameOrAfter(startDate) &&
+        launchDate.isSameOrBefore(endDate)
+      );
+    });
+
     content = (
       <div className="space-y-4">
         {/* Heading */}
-        <Heading text={`All Launches (${upcomingFilteredData.length})`} />
+        <Heading text={`All Launches (${dateFilteredData.length})`} />
 
         {/* Search and filtering section */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between pb-2">
@@ -77,7 +90,7 @@ const Launches = () => {
         </p>
 
         {/* Launch items grid */}
-        <LaunchesGrid {...{ launches: upcomingFilteredData }} />
+        <LaunchesGrid {...{ launches: dateFilteredData }} />
       </div>
     );
   }
